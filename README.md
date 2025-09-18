@@ -29,6 +29,7 @@ Some of the topics/programs included:
 ## 🛠 How to Run
 1. Clone this repository:
    ```bash
-    git clone https://github.com/Srijan0113/Python-Basics.git
-   git clone https://github.com/your-username/python-basics.git
-
+   git clone https://github.com/Srijan0113/Python-Basics.git
+1. Clone this repositoone https://github.com/Srijan0113/Python-Basics.git
+   
+   git clone https://github.com/your-username/pyt
