@@ -17,5 +17,5 @@ else:
 
 print("You got " + str(score)+ " questions correct !") 
 print("YOu got",score,"questions correct ")
-
 #hum iska percentage vi nikal sakte hain
+#we can add many questions like this 
