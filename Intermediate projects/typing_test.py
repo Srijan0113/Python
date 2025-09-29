@@ -1,24 +1,57 @@
-import curses
-from curses import wrapper
+import curses #lets us build text-based UIs inside the terminal.
+from curses import wrapper 
+# wrapper a helper that safely initializes and cleans up curses so the terminal doesn’t get messed up after the program exits.
 import time
 import random
 
-def start_screen(stdscr):
+import curses
+
+def display_text(stdscr, target, current, wpm=0):
+    stdscr.clear()
+    height, width = stdscr.getmaxyx()
+
+    # Draw WPM at the bottom
+    stdscr.addstr(height - 2, 0, f"WPM: {wpm}")
+
+    # --- Draw the target text with wrapping ---
+    row, col = 0, 0
+    for ch in target:
+        if ch == "\n" or col >= width:  # wrap on newline or screen edge
+            row += 1
+            col = 0
+        if row >= height - 3:  # leave space for WPM
+            break
+        stdscr.addstr(row, col, ch, curses.color_pair(3))
+        col += 1
+
+    # --- Overlay typed characters at same positions ---
+    row, col = 0, 0
+    for i, ch in enumerate(current):
+        if col >= width:
+            row += 1
+            col = 0
+        if row >= height - 3:
+            break
+
+        # Determine color based on correctness
+        correct_ch = target[i]
+        color = curses.color_pair(1) if ch == correct_ch else curses.color_pair(2)
+
+        stdscr.addstr(row, col, ch, color)
+        col += 1
+
+    stdscr.refresh()
+
+
+
+def start_screen(stdscr): 
+#stdscr is a window object provided by curses that represents the entire terminal screen.
     stdscr.clear() #clear the entire screen
-    stdscr.addstr(" Welcome to the Typing Speed Test !")
+    stdscr.addstr("Welcome to the Typing Speed Test !")
     stdscr.addstr("Press any key to continue!")
     stdscr.refresh()
     stdscr.getkey()
-    
-def display_text(stdscr, target , current,wpm=0):
-    stdscr.addstr(target)
-    stdscr.addstr(3,0,f"WPM : {wpm}")
-    for i,char in enumerate(current):
-        correct_char=target[i]
-        color=curses.color_pair(1)
-        if char!= correct_char:
-            color=curses.color_pair(2)
-        stdscr.addstr(0,i,char,color)
+
 
 def load_text():
     with open("paragraphs.txt", "r") as f:
@@ -31,9 +64,11 @@ def wpm_test(stdscr):
     wpm = 0
     start_time=time.time()
     stdscr.nodelay(True)
-    
+    # makes input non-blocking (program continues running even if user doesn’t press a key).  
+
     while True:
         time_elapsed=max(time.time()-start_time,1)
+        #how many seconds passed since start (at least 1 second to avoid division by zero).
         wpm = round((len(current_text)/(time_elapsed/60))/5)
         stdscr.clear() #clear the entire screen
         display_text(stdscr,target_text,current_text,wpm)
@@ -63,9 +98,9 @@ def main(stdscr): #standard output ........ screen
     start_screen(stdscr)
     while True:
      wpm_test(stdscr)
-     stdscr.addstr(2,0,"You completed the text ! Press any key to continue")
-     key=stdscr.getkey()
-     if ord(key)==27:
+     stdscr.addstr(2,0,"You completed the text ! Press Esc to escape or press any key to continue")
+     key=stdscr.getch() #safer than getkey
+     if key==27:
          break
 
 wrapper(main)
