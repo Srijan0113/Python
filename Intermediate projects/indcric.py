@@ -3,7 +3,7 @@ from pprint import PrettyPrinter #PrettyPrinter: A utility to pretty-print Pytho
 import time 
 
 BASE_URL = "https://api.cricapi.com/v1"
-API_KEY = "badbe253-d1d6-4c3e-943c-8cf1a80bd441"
+API_KEY = "YOUR-API-KEY"
 UPCOMING_URL = f"{BASE_URL}/currentMatches?apikey={API_KEY}"
 PAST_URL = f"{BASE_URL}/matches?apikey={API_KEY}&status=completed"
 
@@ -160,6 +160,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
