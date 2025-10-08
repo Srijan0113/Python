@@ -2,7 +2,7 @@ from requests import get
 from pprint import PrettyPrinter
 
 BASE_URL='https://api.freecurrencyapi.com/v1/'
-API_KEY='fca_live_YM1QOZjRuuFJaGhVVIKFZOosWDvZVhh7L5FRnYNO'
+API_KEY='YOUR-API-KEY'
 
 printer=PrettyPrinter()
 
@@ -88,5 +88,6 @@ main()
 # print_currencies(data)
 # rate=exchange_rate("USD","INR")
 # print(rate)
+
 
 
