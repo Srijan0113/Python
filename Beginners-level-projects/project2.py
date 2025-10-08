@@ -4,7 +4,7 @@ import json
 import win32com.client as wc
 
 city=input("Enter the name of the city  : \n ")
-url=f"https://api.weatherapi.com/v1/current.json?key=3a4b548dcb2c429e9b463544250609&q={city}"
+url=f"https://api.weatherapi.com/v1/current.json?key=YOUR-API-KEY&q={city}"
 
 r=requests.get(url)
 #print(r.text)
@@ -36,5 +36,6 @@ for key in keys_current:
          
     print(f"{key.capitalize()}:{value}")
     speaker.speak(f"{key} is {value}")
+
 
 
